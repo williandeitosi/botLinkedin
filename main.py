@@ -89,3 +89,5 @@ for btn in buttons:
                     By.XPATH, '//button[@aria-label="Enviar agora"]'
                 )
                 enviar.click()
+
+driver.quit()
