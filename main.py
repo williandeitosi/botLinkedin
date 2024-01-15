@@ -13,8 +13,9 @@ linkedin_email = os.getenv("LINKEDIN_EMAIL")
 linkedin_password = os.getenv("LINKEDIN_PASSWORD")
 
 driver = webdriver.Chrome()
+driver.maximize_window()
 
-access = [linkedin_email, linkedin_password, "Recrutador de Desenvolvedores"]
+access = [linkedin_email, linkedin_password, "recruiter AND hiring AND python"]
 driver.get("https://www.linkedin.com")
 sleep(3)
 
@@ -53,41 +54,47 @@ for btn in buttons:
         btn.click()
         sleep(5)
 
-        conectar = driver.find_elements(
-            By.XPATH,
-            '//button[@class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view"]',
-        )
-        for conect in conectar:
-            if conect.text == "Conectar":
-                conect.click()
+        i=1
+        while True:
+            try:
+                if i >= 10:
+                    i=1
+                    driver.execute_script('window.scroll(0, 9999)')
+                    avancar = driver.find_element(By.XPATH, '//*[@aria-label="Avançar"]')
+                    avancar.click()
+                conectar = driver.find_elements(By.XPATH,'//button[@class="artdeco-button artdeco-button--2 artdeco-button--secondary ember-view"]',)
+                for conect in conectar:
+                    i+=1
+                    if conect.text == "Conectar":
+                        conect.click()
+                        sleep(1)
+                        nome_pessoa = driver.find_element(
+                            By.XPATH, '//div[@class="artdeco-modal__content ember-view"]'
+                        )
+                        strong = nome_pessoa.find_element(By.XPATH, ".//strong")
+                        nome = strong.text
 
-                sleep(5)
+                        sleep(1)
+                        
+                        adicionar_nota = driver.find_element(
+                            By.XPATH, '//button[@aria-label="Adicionar nota"]'
+                        )
+                        adicionar_nota.click()
 
-                nome_pessoa = driver.find_element(
-                    By.XPATH, '//div[@class="artdeco-modal__content ember-view"]'
-                )
-                strong = nome_pessoa.find_element(By.XPATH, ".//strong")
-                nome = strong.text
+                        sleep(1)
 
-                sleep(2)
+                        mensagem = f"Olá {nome}, como vai? Estou buscando oportunidade na área de programação, estou usando um RPA para me comunicar com você que eu mesmo desenvolvi, adoraria fazer parte da sua rede. Podemos conversar?"
+                        textarea = driver.find_element(By.XPATH, '//textarea[@name="message"]')
+                        textarea.click()
+                        textarea.send_keys(mensagem)
 
-                adicionar_nota = driver.find_element(
-                    By.XPATH, '//button[@aria-label="Adicionar nota"]'
-                )
-                adicionar_nota.click()
+                        sleep(1)
 
-                sleep(2)
-
-                mensagem = f"Olá {nome}, como vai? Estou buscando oportunidade na área de Programação, que venho desenvolvendo há mais de 2 anos. adoraria fazer parte da sua rede. Podemos conversar ?"
-                textarea = driver.find_element(By.XPATH, '//textarea[@name="message"]')
-                textarea.click()
-                textarea.send_keys(mensagem)
-
-                sleep(3)
-
-                enviar = driver.find_element(
-                    By.XPATH, '//button[@aria-label="Enviar agora"]'
-                )
-                enviar.click()
+                        enviar = driver.find_element(
+                            By.XPATH, '//button[@aria-label="Enviar agora"]'
+                        )
+                        enviar.click()
+            except:
+                print('[ERRO]')
 
 driver.quit()
