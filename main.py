@@ -15,7 +15,7 @@ linkedin_password = os.getenv("LINKEDIN_PASSWORD")
 driver = webdriver.Chrome()
 driver.maximize_window()
 
-access = [linkedin_email, linkedin_password, "backend"]
+access = [linkedin_email, linkedin_password, "back-end"]
 driver.get("https://www.linkedin.com")
 sleep(5)
 email = driver.find_element(By.XPATH, '//*[@id="main-content"]/section[1]/div/div/a')
@@ -30,9 +30,9 @@ password = driver.find_element(By.XPATH, '//*[@id="password"]')
 password.click()
 password.send_keys(access[1])
 
-sleep(0.5)
-enter = driver.find_element(By.XPATH, '//*[@id="organic-div"]/form/div[3]/button')
-enter.click()
+sleep(10)
+# enter = driver.find_element(By.XPATH, '//*[@id="organic-div"]/form/div[3]/button')
+# enter.click()
 
 sleep(5)
 
