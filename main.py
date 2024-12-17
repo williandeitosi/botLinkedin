@@ -15,7 +15,7 @@ linkedin_password = os.getenv("LINKEDIN_PASSWORD")
 driver = webdriver.Chrome()
 driver.maximize_window()
 
-access = [linkedin_email, linkedin_password, "back-end"]
+access = [linkedin_email, linkedin_password, "front-end"]
 driver.get("https://www.linkedin.com")
 sleep(5)
 email = driver.find_element(By.XPATH, '//*[@id="main-content"]/section[1]/div/div/a')
@@ -72,35 +72,11 @@ for btn in buttons:
                     if conect.text == "Conectar":
                         conect.click()
                         sleep(1)
-                        nome_pessoa = driver.find_element(
-                            By.XPATH,
-                            '//div[@class="artdeco-modal__content ember-view"]',
-                        )
-                        strong = nome_pessoa.find_element(By.XPATH, ".//strong")
-                        nome = strong.text
-
-                        sleep(1)
-
                         adicionar_nota = driver.find_element(
-                            By.XPATH, '//button[@aria-label="Enviar sem nota"]'
+                            By.XPATH, "/html/body/div[4]/div/div/div[4]/button/span"
                         )
                         adicionar_nota.click()
 
-                        # sleep(1)
-
-                        # mensagem = f"Olá {nome}, como vai? Estou buscando oportunidade na área de programação, estou usando um RPA para me comunicar com você que eu mesmo desenvolvi, adoraria fazer parte da sua rede. Podemos conversar?"
-                        # textarea = driver.find_element(
-                        #     By.XPATH, '//textarea[@name="message"]'
-                        # )
-                        # textarea.click()
-                        # textarea.send_keys(mensagem)
-
-                        # sleep(1)
-
-                        # enviar = driver.find_element(
-                        #     By.XPATH, '//button[@aria-label="Enviar agora"]'
-                        # )
-                        # enviar.click()
             except:
                 print("[ERRO]")
 
